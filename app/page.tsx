@@ -15,6 +15,16 @@ const links = [
     href: 'https://instagram.com/patrickgatiri',
   },
   {
+    label: 'HackerOne',
+    detail: 'security research',
+    href: 'https://hackerone.com/patrick358/',
+  },
+  {
+    label: 'X',
+    detail: 'thoughts',
+    href: 'https://x.com/_patrick358',
+  },
+  {
     label: 'Email',
     detail: 'patrickgatiri@gmail.com',
     href: 'mailto:patrickgatiri@gmail.com',
