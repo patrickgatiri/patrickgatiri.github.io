@@ -31,9 +31,53 @@ const links = [
   },
 ];
 
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': 'https://patrickgatiri.me/#profile',
+  url: 'https://patrickgatiri.me/',
+  name: 'Patrick Gatiri | Platform & DevSecOps Engineer',
+  description:
+    'The personal profile of Patrick Gatiri, a Platform and DevSecOps Engineer based in Nairobi, Kenya.',
+  inLanguage: 'en',
+  mainEntity: {
+    '@type': 'Person',
+    '@id': 'https://patrickgatiri.me/#person',
+    name: 'Patrick Gatiri',
+    alternateName: 'patrickgatiri',
+    url: 'https://patrickgatiri.me/',
+    jobTitle: ['Platform Engineer', 'DevSecOps Engineer'],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Nairobi',
+      addressCountry: 'KE',
+    },
+    sameAs: [
+      'https://github.com/patrickgatiri',
+      'https://www.linkedin.com/in/patrick-gatiri',
+      'https://instagram.com/patrickgatiri',
+      'https://hackerone.com/patrick358/',
+      'https://x.com/_patrick358',
+    ],
+    knowsAbout: [
+      'Platform engineering',
+      'DevSecOps',
+      'Cloud infrastructure',
+      'Secure software delivery',
+      'Developer platforms',
+    ],
+  },
+};
+
 export default function Home() {
   return (
     <main className="site-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(profileJsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
 

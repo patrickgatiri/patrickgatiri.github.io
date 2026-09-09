@@ -13,22 +13,62 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://patrickgatiri.github.io'),
-  title: 'Patrick Gatiri — Platform & DevSecOps Engineer',
+  metadataBase: new URL('https://patrickgatiri.me'),
+  title: 'Patrick Gatiri | Platform & DevSecOps Engineer',
   description:
-    'Patrick Gatiri is a Platform and DevSecOps Engineer based in Nairobi, Kenya.',
+    'Patrick Gatiri is a Nairobi-based Platform and DevSecOps Engineer focused on reliable infrastructure, secure delivery systems, and developer platforms.',
+  applicationName: 'Patrick Gatiri',
+  authors: [{ name: 'Patrick Gatiri', url: '/' }],
+  creator: 'Patrick Gatiri',
+  publisher: 'Patrick Gatiri',
+  alternates: {
+    canonical: '/',
+  },
+  keywords: [
+    'Patrick Gatiri',
+    'Platform Engineer',
+    'DevSecOps Engineer',
+    'Nairobi',
+    'Kenya',
+    'cloud infrastructure',
+    'secure software delivery',
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     type: 'website',
-    title: 'Patrick Gatiri — Platform & DevSecOps Engineer',
+    url: '/',
+    siteName: 'Patrick Gatiri',
+    locale: 'en_KE',
+    title: 'Patrick Gatiri | Platform & DevSecOps Engineer',
     description:
-      'Platform and DevSecOps Engineer building reliable, secure systems in Nairobi, Kenya.',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Patrick Gatiri' }],
+      'Nairobi-based Platform and DevSecOps Engineer building reliable infrastructure, secure delivery systems, and developer platforms.',
+    images: [
+      {
+        url: '/og.png',
+        width: 1200,
+        height: 630,
+        alt: 'Patrick Gatiri — Platform and DevSecOps Engineer in Nairobi, Kenya',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Patrick Gatiri — Platform & DevSecOps Engineer',
+    title: 'Patrick Gatiri | Platform & DevSecOps Engineer',
     description:
-      'Platform and DevSecOps Engineer building reliable, secure systems in Nairobi, Kenya.',
+      'Nairobi-based Platform and DevSecOps Engineer building reliable infrastructure and secure delivery systems.',
     images: ['/og.png'],
   },
 };
