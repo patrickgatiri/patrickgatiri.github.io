@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>something’s waiting</title>
+  <link rel="icon" href="data:,">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --bg: #0b0b0c; --text: #e9e2d0; --gold: #c9a45c; --muted: #8b8574; --line: #3a3426; --cream: #c9b98f; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Fraunces', Georgia, serif; font-weight: 300; }
+    .page { width: 100%; max-width: 480px; margin-inline: auto; min-height: 100dvh; padding: calc(48px + env(safe-area-inset-top)) calc(32px + env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) calc(32px + env(safe-area-inset-left)); display: flex; flex-direction: column; }
+    header { display: flex; align-items: center; gap: 18px; }
+    .monogram { width: 34px; height: 34px; flex: 0 0 34px; border: 1px solid var(--gold); display: grid; place-items: center; color: var(--gold); font-size: 13px; font-weight: 400; }
+    header::after { content: ''; height: 1px; flex: 1; background: var(--line); }
+    main { display: grid; flex: 1; }
+    .screen { grid-area: 1 / 1; min-width: 0; }
+    [hidden] { display: none !important; }
+    .locked { display: flex; flex-direction: column; justify-content: center; gap: 34px; padding-block: 48px; }
+    .lock { width: 30px; height: 30px; color: var(--gold); }
+    p, h1, h2 { margin: 0; font-weight: inherit; }
+    .recipient { color: var(--gold); font-size: 24px; font-style: italic; font-weight: 400; }
+    .invitation { font-size: 30px; line-height: 1.25; }
+    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+    .unit { min-width: 0; text-align: center; padding-block: 20px; }
+    .unit + .unit { border-left: 1px solid var(--line); }
+    .number { display: block; font-size: 52px; line-height: 1; font-variant-numeric: tabular-nums lining-nums; font-optical-sizing: none; }
+    .unit:last-child .number { color: var(--gold); }
+    .label { display: block; margin-top: 12px; font-size: 11px; letter-spacing: .2em; font-weight: 400; color: var(--muted); }
+    .until { text-align: center; font-size: 18px; font-style: italic; color: var(--cream); }
+    .reveal { display: flex; flex-direction: column; gap: 26px; padding-block: 54px 44px; }
+    .note { font-size: 20px; line-height: 1.5; }
+    .note:last-of-type { font-style: italic; }
+    .rule { width: 36px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .congrats { margin-top: 10px; font-size: 42px; line-height: 1.05; color: var(--gold); font-style: italic; font-weight: 400; }
+    .media { display: block; max-width: 100%; height: auto; border-radius: 2px; margin-inline: auto; }
+    footer { color: var(--muted); font-size: 12px; letter-spacing: .22em; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    .leaving { pointer-events: none; animation: fade-out 600ms both; }
+    .entering { animation: fade-in 600ms both; }
+    .entering .note { animation: fade-in 600ms both; animation-delay: calc(600ms + var(--order) * 250ms); }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header aria-label="PG"><span class="monogram" aria-hidden="true">PG</span></header>
+    <main>
+      <section class="screen locked" id="locked" aria-labelledby="invitation" hidden>
+        <svg class="lock" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="6" y="13" width="18" height="14" rx="2"/><path d="M10 13V8a5 5 0 0 1 10 0v5M15 19v3"/></svg>
+        <p class="recipient">to Wanjiku Mathu, Esq.,</p>
+        <h1 class="invitation" id="invitation">something’s waiting for you. come back when the clock hits zero.</h1>
+        <div class="countdown" aria-live="off" aria-hidden="true">
+          <div class="unit"><span class="number" id="days">00</span><span class="label">days</span></div>
+          <div class="unit"><span class="number" id="hours">00</span><span class="label">hours</span></div>
+          <div class="unit"><span class="number" id="mins">00</span><span class="label">mins</span></div>
+          <div class="unit"><span class="number" id="secs">00</span><span class="label">secs</span></div>
+        </div>
+        <p class="sr-only" id="countdown-description" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="until">until the big day.</p>
+      </section>
+      <section class="screen reveal" id="reveal" aria-labelledby="congrats" hidden></section>
+    </main>
+    <footer>patrickgatiri//2026</footer>
+  </div>
+  <template id="note-template">
+    <p class="recipient">to Wanjiku Mathu, Esq.,</p>
+    <p class="note" style="--order: 0">guess who’s now an advocate of the high court of kenya? you did it, baby. years of work, one oath, and a whole life of arguing (and winning) ahead of you. today is yours. enjoy.</p>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="note" style="--order: 1">i know i’m missing the big day, and that’s not in order. i made you this, a reluctant stand-in until i’m back.</p>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="note" style="--order: 2">seriously though, i’m so proud of you. you earned every bit of this, and you’ll be brilliant. celebrate hard today, and save me a slice of the cake.</p>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="note" style="--order: 3">anyways, now that uko kwa bar, nikirudi shots lazima, kana atia?</p>
+    <h1 class="congrats" id="congrats">congrats, wakili.</h1>
+  </template>
+  <script>
+    // CONFIG: East Africa Time (UTC+03:00). Optional local image or MP4 path.
+    const UNLOCK_AT = '2026-10-30T09:00:00+03:00';
+    const MEDIA_SRC = null;
+
+    const unlockTime = Date.parse(UNLOCK_AT);
+    const preview = new URLSearchParams(location.search).get('preview');
+    const locked = document.getElementById('locked');
+    const reveal = document.getElementById('reveal');
+    const numbers = ['days', 'hours', 'mins', 'secs'].map(id => document.getElementById(id));
+    const description = document.getElementById('countdown-description');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let revealed = false;
+    let lastAnnouncement = -Infinity;
+    let timer;
+
+    function unlock(animate) {
+      if (revealed) return;
+      revealed = true;
+      clearInterval(timer);
+      reveal.append(document.getElementById('note-template').content.cloneNode(true));
+      if (MEDIA_SRC) {
+        const isVideo = /\.mp4(?:[?#]|$)/i.test(MEDIA_SRC);
+        const media = document.createElement(isVideo ? 'video' : 'img');
+        media.className = 'media';
+        media.src = MEDIA_SRC;
+        if (isVideo) { media.controls = true; media.playsInline = true; }
+        else { media.alt = 'a memory of us'; }
+        reveal.querySelector('.recipient').after(media);
+      }
+      reveal.hidden = false;
+      if (animate && !reducedMotion.matches) {
+        locked.setAttribute('aria-hidden', 'true');
+        locked.classList.add('leaving');
+        reveal.classList.add('entering');
+        setTimeout(() => { locked.hidden = true; }, 600);
+      } else {
+        locked.hidden = true;
+      }
+    }
+
+    function update(initial = false) {
+      const now = Date.now();
+      if (preview === 'reveal' || (preview !== 'countdown' && now >= unlockTime)) {
+        unlock(!initial);
+        return;
+      }
+      locked.hidden = false;
+      const seconds = Math.max(0, Math.ceil((unlockTime - now) / 1000));
+      const parts = [Math.floor(seconds / 86400), Math.floor(seconds / 3600) % 24, Math.floor(seconds / 60) % 60, seconds % 60];
+      numbers.forEach((element, index) => {
+        element.textContent = String(parts[index]).padStart(2, '0');
+        // Retain room for arbitrarily long day counts without changing column widths.
+        element.style.fontSize = parts[index] > 99 ? `${Math.min(52, 110 / String(parts[index]).length)}px` : '';
+      });
+      if (now - lastAnnouncement >= 60000) {
+        description.textContent = `${parts[0]} days, ${parts[1]} hours and ${parts[2]} minutes until the big day.`;
+        lastAnnouncement = now;
+      }
+    }
+
+    update(true);
+    if (!revealed) timer = setInterval(() => update(), 1000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && !revealed) update();
+    });
+  </script>
+</body>
+</html>
